@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+    <script src="/static/js/echarts.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/echarts-wordcloud.js"></script>
+</head>
+<body>
+<div id="bar" style="width:1000px; height:600px;"></div>
+
+<div id="bar2" style="width:1000px; height:600px;"></div>
+<div id="bar3" style="width:1000px; height:600px;"></div>
+<div id="Cloud" style="width:1000px; height:800px;"></div>
+<div id="main1" style="width:1000px; height:800px;"></div>
+<div id="main2" style="width:1000px; height:800px;"></div>
+</body>
+
+<script>
+    $(
+        function () {
+            var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+            $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:5000/barChart",
+                dataType: 'json',
+                success: function (result) {
+                    chart.setOption(result);
+                }
+            });
+        }
+    )
+</script>
+
+
+<!-- 使用 pyecharts -->
+<script type="text/javascript">
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart2 = echarts.init(document.getElementById('bar2'));
+
+    // 指定图表的配置项和数据  大括号 识别不了，，大括号 换行无法识别。。
+    var option2 = {{ Bar2_options | safe | safe }};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart3 = echarts.init(document.getElementById('bar3'));
+
+    // 指定图表的配置项和数据
+    var option3 = {{ Bar3_options | safe }};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart3.setOption(option3);
+
+
+
+</script>
+
+<!-- 使用 pyecharts 词云图-->
+<script type="text/javascript">
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart_Cloud = echarts.init(document.getElementById('Cloud'));
+    // 指定图表的配置项和数据
+    var option_Cloud = {{ Cloud_options | safe }};
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart_Cloud.setOption(option_Cloud);
+
+</script>
+
+
+
+</html>
